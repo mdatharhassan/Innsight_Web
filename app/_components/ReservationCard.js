@@ -20,9 +20,10 @@ function ReservationCard({ booking, onDelete }) {
     numGuests,
     status,
     created_at,
+    isPaid,
+    hasBreakfast,
     cabins: { name, image },
   } = booking;
-
   return (
     <div className="flex border border-primary-800">
       <div className="relative h-32 aspect-square">
@@ -38,6 +39,14 @@ function ReservationCard({ booking, onDelete }) {
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold">
             {numNights} nights in Cabin {name}
+            {isPaid && (
+              <span className="ml-2 text-green-600 font-semibold">— Paid</span>
+            )}
+            {!isPaid && (
+              <span className="ml-2 text-green-600 font-semibold">
+                — Not Paid
+              </span>
+            )}
           </h3>
           {isPast(new Date(startDate)) ? (
             <span className="bg-yellow-800 text-yellow-200 h-7 px-3 uppercase text-xs font-bold flex items-center rounded-sm">

@@ -27,16 +27,17 @@ export async function updateGuest(formData) {
 
   revalidatePath("/account/profile");
 }
-
 export async function createBooking(bookingData, formData) {
+  let guestId;
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
+  guestId = session.user.guestId;
 
   const newBooking = {
     ...bookingData,
-    guestId: session.user.guestId,
-    numGuests: Number(formData.get("numGuests")),
-    observations: formData.get("observations").slice(0, 1000),
+    guestId,
+    numGuests: Number(formData.numGuests),
+    observations: (formData.observations || "").slice(0, 1000),
     extrasPrice: 0,
     totalPrice: bookingData.cabinPrice,
     isPaid: false,
@@ -50,9 +51,7 @@ export async function createBooking(bookingData, formData) {
     .select();
 
   if (error) throw new Error("Booking could not be created");
-
   revalidatePath(`/cabins/${bookingData.cabinId}`);
-
   redirect("/cabins/thankyou");
 }
 

@@ -34,6 +34,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 -Create and manage bookings
 -Edit guest profile (nationality, ID)
 -Cancel bookings with validation
+-Pay Now or Pay on Arrival option during booking
 -Thank you page post-booking confirmation
 
 🔧 Tech Stack
@@ -43,13 +44,18 @@ Frontend
 -React Hook Form – Form handling
 -React Query – Data fetching & caching
 -Styled Components – Styling with dark mode support
--Backend & Database
+
+Backend & Database
 -Supabase – Postgres-based backend for real-time DB and authentication
 -NextAuth.js – Authentication using Google provider
+-Stripe / Razorpay – Payment integration for booking payments
 
 ⚙️ Functionality
 
 -Booking Flow: Guests select a cabin → pick dates → fill form → book
+-Payment Flow:
+If "Pay Now": Redirects to Stripe checkout
+If "Pay on Arrival": Confirms booking without payment
 -Authentication: Guests must sign in to book/view/manage reservations
 -Profile Management: Update guest nationality and ID
 -Authorization: Users can only modify their own bookings/profile
@@ -63,10 +69,10 @@ Frontend
 
 -All server actions validate authentication & authorization
 -No booking/profile updates allowed for other users
+-Webhook-based payment verification for extra security
 
 🛠 Future Enhancements
 
--Add payment gateway
 -Add email confirmations
 -Improve accessibility & animations
 
@@ -91,6 +97,9 @@ NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 AUTH_GOOGLE_ID=your_google_client_id
 AUTH_GOOGLE_SECRET=your_google_client_secret
+STRIPE_SECRET_KEY=your_stripe_secret_key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 ```
 
 💡 You can get SUPABASE_URL and ANON_KEY from your Supabase project settings
